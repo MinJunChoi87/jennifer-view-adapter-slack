@@ -41,21 +41,19 @@ public class SlackAdapter implements EventHandler{
 
 	private String getBody(EventData event){
 		StringBuilder messageBody = new StringBuilder();
-		messageBody.append(String.format("```Domain ID: %d%n", event.domainId));
-		messageBody.append(String.format("Domain Name: %s%n", event.domainName));
-		messageBody.append(String.format("Instance Name: %s%n", event.instanceName));
-		messageBody.append(String.format("Transaction ID: %d%n", event.txid));
-		messageBody.append(String.format("Service Name: %s%n", event.serviceName));
-		messageBody.append(String.format("Error Type: %s%n", event.errorType));
-		messageBody.append(String.format("Error Level: %s%n", event.eventLevel));
-		messageBody.append(String.format("Error Time: %s```%n", sdf.format(new Date(event.time))));
+		messageBody.append(String.format("대상: %s%n", event.instanceName));
+		messageBody.append(String.format("이벤트 메시지: %s%n", event.errorType));
+		messageBody.append(String.format("등급: %s%n", event.eventLevel));
+		messageBody.append(String.format("시간: %s```%n", sdf.format(new Date(event.time))));
 		return messageBody.toString();
 	}
 	
 	private String getPreText(EventData event) {
 		StringBuilder pretext = new StringBuilder();
-		pretext.append(String.format("The following event [%s] was caught by JENNIFER. %n",  event.errorType));
-		pretext.append("Here are some additional details\n");
+		pretext.append(String.format("[%s]",  event.instanceName));
+		pretext.append(String.format("[%s]",  event.eventLevel));
+		pretext.append(String.format("[%s] 이벤트 발생 알림 %n",  event.errorType));
+		pretext.append("상세내역\n");
 		return pretext.toString();
 	}
 
